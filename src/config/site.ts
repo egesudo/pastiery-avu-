@@ -1,3 +1,5 @@
+import { buildSafeWhatsAppUrl } from '../utils/security';
+
 export interface WorkingHoursConfig {
   /** Ekranda gösterilecek çalışma saati metni, örn: "Her gün 07:00 – 23:00" */
   display: string;
@@ -104,8 +106,7 @@ export const siteConfig: SiteConfig = {
  * WhatsApp sipariş/bilgi alma bağlantısı üretir.
  */
 export function buildWhatsAppUrl(message: string): string {
-  const cleanNumber = siteConfig.whatsappNumber.replace(/[^0-9A-Za-z]/g, '');
-  return `https://wa.me/${cleanNumber}?text=${encodeURIComponent(message)}`;
+  return buildSafeWhatsAppUrl(siteConfig.whatsappNumber, message);
 }
 
 /**

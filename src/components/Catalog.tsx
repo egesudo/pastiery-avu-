@@ -27,6 +27,7 @@ import {
   getSectionContainerVariants,
   getRevealItemVariants,
 } from '../utils/motion';
+import { isValidProductCategory } from '../utils/security';
 
 const DROPLET_OVERSHOOT_EASE: [number, number, number, number] = [0.34, 1.32, 0.64, 1];
 const HOVER_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -336,11 +337,11 @@ export const Catalog: React.FC = () => {
     return () => mq.removeEventListener('change', onChange);
   }, []);
 
-  // Footer hızlı kategori bağlantıları için event dinleyicisi
+  // Footer hızlı kategori bağlantıları için doğrulamalı event dinleyicisi
   useEffect(() => {
     const handleSelectCategory = (e: Event) => {
-      const customEvent = e as CustomEvent<ProductCategory>;
-      if (customEvent.detail) {
+      const customEvent = e as CustomEvent<unknown>;
+      if (isValidProductCategory(customEvent.detail)) {
         handleSelectTab(customEvent.detail);
       }
     };
@@ -348,15 +349,8 @@ export const Catalog: React.FC = () => {
     return () => window.removeEventListener('select-catalog-category', handleSelectCategory);
   }, [handleSelectTab]);
 
-  // URL'de ?showUnverified=true varsa veya siteConfig.SHOW_UNVERIFIED true ise onaysız ürünleri de göster
-  const showUnverified = useMemo(() => {
-    if (siteConfig.SHOW_UNVERIFIED) return true;
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      return params.get('showUnverified') === 'true' || params.get('unverified') === '1';
-    }
-    return false;
-  }, []);
+  // Onaysız ürünler yalnızca yapılandırma bayrağı ile kontrol edilir; URL parametresi ile aşılamaz
+  const showUnverified = siteConfig.SHOW_UNVERIFIED;
 
   const filteredProducts = useMemo(() => {
     return PRODUCTS.filter(

@@ -2,6 +2,11 @@ import React from 'react';
 import { Logo } from './Logo';
 import { siteConfig } from '../config/site';
 import { CATEGORIES, ProductCategory } from '../data/products';
+import {
+  TRUSTED_FACEBOOK_HOSTS,
+  TRUSTED_INSTAGRAM_HOSTS,
+  sanitizeSafeHref,
+} from '../utils/security';
 
 interface FooterProps {
   onSelectCategory?: (category: ProductCategory) => void;
@@ -20,6 +25,17 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
       })
     );
   };
+
+  const safeInstagramUrl = sanitizeSafeHref(
+    siteConfig.instagram,
+    TRUSTED_INSTAGRAM_HOSTS,
+    ''
+  );
+  const safeFacebookUrl = sanitizeSafeHref(
+    siteConfig.facebook,
+    TRUSTED_FACEBOOK_HOSTS,
+    ''
+  );
 
   return (
     <footer className="bg-[#F3ECE1] border-t border-[#3E2723]/12 pt-14 pb-24 sm:pb-12 px-4 sm:px-6 lg:px-8">
@@ -48,12 +64,12 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
               </p>
             )}
 
-            {/* Sosyal medya bağlantıları yalnızca config'te varsa gösterilir */}
-            {(siteConfig.instagram || siteConfig.facebook) && (
+            {/* Sosyal medya bağlantıları yalnızca doğrulanmış HTTPS URL varsa gösterilir */}
+            {(safeInstagramUrl || safeFacebookUrl) && (
               <div className="mt-4 flex items-center gap-3">
-                {siteConfig.instagram && (
+                {safeInstagramUrl && (
                   <a
-                    href={siteConfig.instagram}
+                    href={safeInstagramUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Instagram sayfamız"
@@ -62,9 +78,9 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
                     Instagram
                   </a>
                 )}
-                {siteConfig.facebook && (
+                {safeFacebookUrl && (
                   <a
-                    href={siteConfig.facebook}
+                    href={safeFacebookUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Facebook sayfamız"

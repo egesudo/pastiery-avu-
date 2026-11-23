@@ -1,15 +1,22 @@
 import React from 'react';
 import { siteConfig } from '../config/site';
+import {
+  TRUSTED_FACEBOOK_HOSTS,
+  TRUSTED_INSTAGRAM_HOSTS,
+  sanitizeOriginUrl,
+  sanitizeSafeHref,
+  serializeJsonLdSafe,
+} from '../utils/security';
 
 /**
  * Schema.org Bakery JSON-LD yapılandırılmış verisi.
- * Telefon, çalışma saatleri ve sosyal bağlantılar yalnızca siteConfig içinde tanımlıysa eklenir.
+ * Tüm köken ve dış URL'ler doğrulanır; HTML kırılım karakterleri güvenli serileştirilir.
  */
 export const JsonLd: React.FC = () => {
-  const origin =
-    typeof window !== 'undefined'
-      ? window.location.origin
-      : 'https://cavusogullaripastaneleri.com';
+  const origin = sanitizeOriginUrl(
+    typeof window !== 'undefined' ? window.location.origin : undefined,
+    'https://cavusogullaripastaneleri.com'
+  );
 
   const schema: Record<string, unknown> = {
     '@context': 'https://schema.org',
@@ -29,7 +36,6 @@ export const JsonLd: React.FC = () => {
     },
   };
 
-  // Telefon yalnızca varsayılan placeholder ("90XXXXXXXXXX") değiştirilmişse eklenir
   if (
     siteConfig.whatsappNumber &&
     !siteConfig.whatsappNumber.includes('X') &&
@@ -38,15 +44,23 @@ export const JsonLd: React.FC = () => {
     schema.telephone = `+${siteConfig.whatsappNumber.replace(/^\+/, '')}`;
   }
 
-  // Çalışma saatleri yalnızca config'te tanımlıysa eklenir
   if (siteConfig.hours?.display) {
     schema.openingHours = siteConfig.hours.display;
   }
 
-  // Sosyal medya linkleri yalnızca config'te tanımlıysa eklenir
   const sameAs: string[] = [];
-  if (siteConfig.instagram) sameAs.push(siteConfig.instagram);
-  if (siteConfig.facebook) sameAs.push(siteConfig.facebook);
+  const safeInstagram = sanitizeSafeHref(
+    siteConfig.instagram,
+    TRUSTED_INSTAGRAM_HOSTS,
+    ''
+  );
+  const safeFacebook = sanitizeSafeHref(
+    siteConfig.facebook,
+    TRUSTED_FACEBOOK_HOSTS,
+    ''
+  );
+  if (safeInstagram) sameAs.push(safeInstagram);
+  if (safeFacebook) sameAs.push(safeFacebook);
   if (sameAs.length > 0) {
     schema.sameAs = sameAs;
   }
@@ -54,7 +68,7 @@ export const JsonLd: React.FC = () => {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLdSafe(schema) }}
     />
   );
 };

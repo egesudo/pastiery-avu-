@@ -8,6 +8,11 @@ import {
   getSectionContainerVariants,
   getRevealItemVariants,
 } from '../utils/motion';
+import {
+  TRUSTED_MAPS_EMBED_HOSTS,
+  TRUSTED_MAPS_LINK_HOSTS,
+  sanitizeSafeHref,
+} from '../utils/security';
 
 export const LocationContact: React.FC = () => {
   const [copied, setCopied] = useState(false);
@@ -49,13 +54,21 @@ export const LocationContact: React.FC = () => {
       setCopied(true);
       window.setTimeout(() => setCopied(false), 2600);
     } catch {
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 2600);
+      setCopied(false);
     }
   };
 
   const contactWhatsAppUrl = buildWhatsAppUrl(
     'Merhaba, Gaziantepli Çavuşoğulları Pastaneleri konum ve sipariş hakkında bilgi almak istiyorum.'
+  );
+  const safeMapsEmbedUrl = sanitizeSafeHref(
+    siteConfig.mapsEmbedUrl,
+    TRUSTED_MAPS_EMBED_HOSTS,
+    ''
+  );
+  const safeMapsDirectionsUrl = sanitizeSafeHref(
+    siteConfig.mapsDirectionsUrl,
+    TRUSTED_MAPS_LINK_HOSTS
   );
 
   return (
@@ -163,7 +176,7 @@ export const LocationContact: React.FC = () => {
 
               {/* Yol Tarifi Al Bağlantısı */}
               <a
-                href={siteConfig.mapsDirectionsUrl}
+                href={safeMapsDirectionsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 min-h-[48px] px-5 py-3 rounded-full bg-[#3E2723] text-[#FFFDF9] text-sm font-semibold hover:bg-[#4E342E] active:scale-95 transition-all text-center"
@@ -186,26 +199,29 @@ export const LocationContact: React.FC = () => {
           </motion.div>
         </motion.div>
 
-        {/* Sağ: Google Maps Iframe (API anahtarı gerektirmez, sepia/saturate filtreli, 24px köşe) */}
+        {/* Sağ: Google Maps Iframe (sandbox kısıtlamalı, sepia/saturate filtreli, 24px köşe) */}
         <motion.div
           variants={itemVariants}
           className="lg:col-span-7 relative min-h-[320px] sm:min-h-[400px] rounded-[24px] overflow-hidden bg-[#F3ECE1] border border-[#3E2723]/12 shadow-warm flex flex-col justify-between"
         >
-          <iframe
-            src={siteConfig.mapsEmbedUrl}
-            title="Gaziantepli Çavuşoğulları Pastaneleri Halkalı Merkez Google Haritalar Konumu"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            style={{ filter: 'sepia(0.2) saturate(0.9)' }}
-            className="w-full h-full min-h-[320px] sm:min-h-[400px] border-0 flex-1"
-            allowFullScreen
-          />
+          {safeMapsEmbedUrl && (
+            <iframe
+              src={safeMapsEmbedUrl}
+              title="Gaziantepli Çavuşoğulları Pastaneleri Halkalı Merkez Google Haritalar Konumu"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+              style={{ filter: 'sepia(0.2) saturate(0.9)' }}
+              className="w-full h-full min-h-[320px] sm:min-h-[400px] border-0 flex-1"
+              allowFullScreen
+            />
+          )}
 
           {/* Harita yüklenemezse veya engellenirse her zaman görünür kalan alt yol tarifi çubuğu */}
           <div className="px-4 py-2.5 bg-[#FFFDF9]/95 border-t border-[#3E2723]/10 flex flex-wrap items-center justify-between gap-2 text-xs text-[#5D4037]">
             <span>Karadut Sokağı No:14, Halkalı Merkez / Küçükçekmece</span>
             <a
-              href={siteConfig.mapsDirectionsUrl}
+              href={safeMapsDirectionsUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="font-semibold text-[#4F6A1A] hover:underline"
