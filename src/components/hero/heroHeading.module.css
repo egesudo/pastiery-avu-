@@ -1,0 +1,239 @@
+.heroCopy {
+  --bg-cream: #FAF6F0;
+  --ink-espresso: #2A180D;
+  --choco-milk: #7A4A2B;
+  --choco-caramel: #C98A3E;
+  --vanilla-soft: #F5E7C9;
+  --olive-cta: #566B2F;
+
+  position: relative;
+  width: 100%;
+  max-width: 580px;
+  color: var(--ink-espresso);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  padding-bottom: 20px;
+  margin-bottom: 0.25rem;
+}
+
+@media (min-width: 640px) {
+  .heroCopy {
+    padding-bottom: 28px;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.heroKicker {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--olive-cta);
+}
+
+.heroTitle {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  text-align: left;
+  cursor: default;
+  user-select: text;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+}
+
+.lineTop,
+.lineBottom {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(1.85rem, 4.2vw, 3.5rem);
+  color: var(--ink-espresso);
+}
+
+.lineAccentWrap {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.lineScript {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: clamp(2.05rem, 4.8vw, 4rem);
+  line-height: 1.12;
+  display: inline-block;
+  padding-right: 0.12em;
+  color: var(--ink-espresso);
+}
+
+.wordEspresso {
+  color: var(--ink-espresso);
+}
+
+.creamHighlight {
+  font-style: italic;
+  font-weight: 700;
+  position: relative;
+}
+
+/*
+ * "Ustalık" ve "Tazelik" için sabit #7A4A2B -> #C98A3E background-clip: text geçişi;
+ * başlığın kalanı #FAF6F0 zemin üzerinde WCAG AA okunabilirliği için tutarlı #2A180D kalır.
+ */
+.chocoCaramelShine {
+  display: inline-block;
+  padding-inline: 0.06em;
+  margin-inline: -0.06em;
+  color: #7A4A2B;
+  background-image: linear-gradient(125deg, #7A4A2B 0%, #C98A3E 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.flowUnderline {
+  display: block;
+  width: min(100%, 340px);
+  height: auto;
+  margin-top: 2px;
+  overflow: visible;
+}
+
+.flowPathCream,
+.flowPathChoco {
+  stroke-dasharray: 420;
+  stroke-dashoffset: 420;
+  animation: drawFlow 1.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.flowPathChoco {
+  animation-delay: 0.18s;
+}
+
+.awaitingSplash .flowPathCream,
+.awaitingSplash .flowPathChoco {
+  animation: none;
+  stroke-dashoffset: 420;
+}
+
+/* "Ustalık" ve "Tazelik" altından süzülen akışkan çikolata damlaları */
+.dripLayer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 2;
+}
+
+.dropUnit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.dropNeckWrap {
+  transform-origin: top center;
+  will-change: transform, opacity;
+  animation: dropElongate var(--elongate-ms, 700ms) cubic-bezier(0.22, 1, 0.36, 1)
+    var(--drop-delay, 0ms) both;
+}
+
+.dropFallCarrier {
+  will-change: transform, opacity;
+  animation: dropFall var(--fall-ms, 600ms) cubic-bezier(0.5, 0, 0.9, 0.5)
+    calc(var(--drop-delay, 0ms) + var(--elongate-ms, 700ms)) both;
+}
+
+.dropSplash {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 22px;
+  height: 11px;
+  margin-left: -11px;
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation: dropSplash var(--splash-ms, 320ms) cubic-bezier(0.22, 1, 0.36, 1)
+    calc(var(--drop-delay, 0ms) + var(--elongate-ms, 700ms) + var(--fall-ms, 600ms) - 30ms)
+    both;
+}
+
+@keyframes drawFlow {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes dropElongate {
+  0% {
+    opacity: 0;
+    transform: scaleY(0.14) scaleX(0.9);
+  }
+  28% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: scaleY(1) scaleX(1);
+  }
+}
+
+@keyframes dropFall {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  85% {
+    opacity: 1;
+    transform: translate3d(0, calc(var(--drop-fall-distance, 28px) * 0.94), 0)
+      scale(0.96, 1.06);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, var(--drop-fall-distance, 28px), 0) scale(1.12, 0.72);
+  }
+}
+
+@keyframes dropSplash {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, var(--drop-fall-distance, 28px), 0) scale(0.32);
+  }
+  25% {
+    opacity: 0.86;
+    transform: translate3d(0, var(--drop-fall-distance, 28px), 0) scale(0.86);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, var(--drop-fall-distance, 28px), 0)
+      scale(1.48, 0.92);
+  }
+}
+
+/* Erişilebilirlik: Hareket azaltma tercihine saygı */
+@media (prefers-reduced-motion: reduce) {
+  .heroCopy {
+    padding-bottom: 8px;
+  }
+  .flowPathCream,
+  .flowPathChoco {
+    animation: none !important;
+    stroke-dashoffset: 0;
+  }
+  .dripLayer {
+    display: none !important;
+  }
+}

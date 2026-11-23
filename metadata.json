@@ -1,0 +1,6 @@
+{
+  "name": "Gaziantepli Çavuşoğulları Pastaneleri",
+  "description": "Halkalı Merkez, Küçükçekmece'de günlük taze yaş pastalar, özel dolgulu ekler, kuru pastalar ve sütlü tatlılar sunan Gaziantepli Çavuşoğulları Pastaneleri dijital vitrini.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

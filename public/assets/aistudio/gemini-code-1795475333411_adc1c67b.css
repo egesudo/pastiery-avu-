@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Playfair+Display:ital,wght@0,600;1,600;1,700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap');
+
+:root {
+  --bg-cream: #F6F2EA;
+  --ink-espresso: #2B160E;
+  --choco-rich: #4B2110;
+  --choco-caramel: #8C5327;
+  --vanilla-soft: #F5E7C9;
+  --olive-cta: #566B2F;
+}
+
+.hero-copy {
+  max-width: 580px;
+  color: var(--ink-espresso);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.hero-kicker {
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--olive-cta);
+  margin-bottom: 0.75rem;
+}
+
+.hero-title {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+.line-top,
+.line-bottom {
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-size: clamp(2.25rem, 4.2vw, 3.5rem);
+  color: var(--ink-espresso);
+}
+
+.line-accent-wrap {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+}
+
+.line-script {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: clamp(2.5rem, 4.8vw, 4rem);
+  line-height: 1.12;
+  display: inline-block;
+  padding-right: 0.12em;
+}
+
+/* Akışkan çikolata & krema hissi veren yumuşak degrade */
+.chocolate-flow {
+  background: linear-gradient(
+    115deg,
+    #2B160E 0%,
+    #5C2B16 32%,
+    #9A5B2A 55%,
+    #3E1D10 80%,
+    #2B160E 100%
+  );
+  background-size: 220% 220%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: chocoSheen 7s ease-in-out infinite;
+}
+
+.cream-highlight {
+  font-style: italic;
+  font-weight: 600;
+  color: var(--choco-caramel);
+  position: relative;
+}
+
+.flow-underline {
+  display: block;
+  width: min(100%, 340px);
+  height: auto;
+  margin-top: 2px;
+  overflow: visible;
+}
+
+.flow-path-cream,
+.flow-path-choco {
+  stroke-dasharray: 420;
+  stroke-dashoffset: 420;
+  animation: drawFlow 1.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.flow-path-choco {
+  animation-delay: 0.18s;
+}
+
+@keyframes drawFlow {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes chocoSheen {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Erişilebilirlik: Hareket azaltma tercihine saygı */
+@media (prefers-reduced-motion: reduce) {
+  .chocolate-flow,
+  .flow-path-cream,
+  .flow-path-choco {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
