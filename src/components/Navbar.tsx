@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X, MessageCircle } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { Logo } from './Logo';
+import { WhatsAppActionButton } from './WhatsAppActionButton';
 import { siteConfig, buildWhatsAppUrl } from '../config/site';
 
 interface NavItem {
@@ -120,12 +121,12 @@ export const Navbar: React.FC = () => {
 
           {/* Sağ: WhatsApp ile Sipariş Butonu */}
           <div className="flex items-center gap-2 shrink-0">
-            <a
+            <WhatsAppActionButton
               href={generalWhatsAppUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+              label="WhatsApp ile Sipariş"
+              size="sm"
               onClick={triggerRipple}
-              className="hidden sm:inline-flex relative overflow-hidden items-center gap-2 min-h-[44px] px-5 py-2.5 rounded-full bg-[#4F6A1A] text-white text-sm font-semibold shadow-sm hover:bg-[#425915] active:scale-95 transition-all whitespace-nowrap shrink-0"
+              className="hidden sm:inline-flex shrink-0"
             >
               {rippleKey && (
                 <span
@@ -134,9 +135,7 @@ export const Navbar: React.FC = () => {
                   aria-hidden="true"
                 />
               )}
-              <MessageCircle className="w-4 h-4 shrink-0" aria-hidden="true" />
-              <span>WhatsApp ile Sipariş</span>
-            </a>
+            </WhatsAppActionButton>
 
             {/* Mobil Hamburger Butonu (≥44x44px) */}
             <button
@@ -210,16 +209,13 @@ export const Navbar: React.FC = () => {
 
             <div className="pt-6 border-t border-[#3E2723]/10">
               <p className="text-xs text-[#5D4037] mb-3">{siteConfig.address}</p>
-              <a
+              <WhatsAppActionButton
                 href={generalWhatsAppUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+                label="WhatsApp ile Sipariş"
+                size="md"
                 onClick={() => setDrawerOpen(false)}
-                className="flex items-center justify-center gap-2 w-full min-h-[48px] px-5 py-3 rounded-full bg-[#4F6A1A] text-white text-sm font-semibold shadow-sm active:scale-95 transition-transform"
-              >
-                <MessageCircle className="w-4 h-4" aria-hidden="true" />
-                <span>WhatsApp ile Sipariş</span>
-              </a>
+                className="w-full"
+              />
             </div>
           </div>
         </div>
@@ -227,16 +223,13 @@ export const Navbar: React.FC = () => {
 
       {/* Mobilde Ekranın Altında Sabit WhatsApp Butonu */}
       <div className="sm:hidden fixed bottom-4 left-4 right-4 z-30 pointer-events-none flex justify-center">
-        <a
+        <WhatsAppActionButton
           href={generalWhatsAppUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="WhatsApp ile bilgi al veya sipariş ver"
-          className="pointer-events-auto inline-flex items-center justify-center gap-2.5 w-full max-w-sm min-h-[48px] px-6 py-3 rounded-full bg-[#4F6A1A] text-white text-sm font-semibold shadow-warm-lg border border-white/15 active:scale-95 transition-transform"
-        >
-          <MessageCircle className="w-4 h-4 shrink-0" aria-hidden="true" />
-          <span>WhatsApp ile Sipariş / Bilgi Al</span>
-        </a>
+          label="WhatsApp ile Sipariş / Bilgi Al"
+          ariaLabel="WhatsApp ile bilgi al veya sipariş ver"
+          size="md"
+          className="pointer-events-auto w-full max-w-sm shadow-warm-lg"
+        />
       </div>
     </>
   );

@@ -1,7 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { MapPin, Copy, Check, Navigation, MessageCircle, Clock } from 'lucide-react';
+import { MapPin, Copy, Check, Navigation, Clock } from 'lucide-react';
 import { siteConfig, buildWhatsAppUrl } from '../config/site';
+import { WhatsAppActionButton } from './WhatsAppActionButton';
 import {
   REVEAL_STAGGER_DELAY,
   SECTION_VIEWPORT,
@@ -187,15 +188,12 @@ export const LocationContact: React.FC = () => {
             </div>
 
             {/* WhatsApp İletişim Butonu */}
-            <a
+            <WhatsAppActionButton
               href={contactWhatsAppUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3.5 rounded-full bg-[#4F6A1A] text-white text-sm font-semibold shadow-sm hover:bg-[#415815] active:scale-95 transition-all text-center"
-            >
-              <MessageCircle className="w-4 h-4 shrink-0" aria-hidden="true" />
-              <span>WhatsApp ile İletişime Geçin</span>
-            </a>
+              label="WhatsApp ile İletişime Geçin"
+              size="md"
+              className="w-full"
+            />
           </motion.div>
         </motion.div>
 

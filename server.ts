@@ -60,11 +60,16 @@ const CONTENT_SECURITY_POLICY = [
 ].join('; ');
 
 function securityHeadersMiddleware(
-  req: Request,
+  _req: Request,
   res: Response,
   next: NextFunction
 ): void {
   res.setHeader('Content-Security-Policy', CONTENT_SECURITY_POLICY);
+  res.setHeader(
+    'Strict-Transport-Security',
+    'max-age=31536000; includeSubDomains; preload'
+  );
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
   res.setHeader(
@@ -74,16 +79,29 @@ function securityHeadersMiddleware(
   res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
   res.setHeader('X-DNS-Prefetch-Control', 'off');
 
-  const isHttps =
-    req.secure || req.headers['x-forwarded-proto'] === 'https';
-  if (process.env.NODE_ENV === 'production' && isHttps) {
-    res.setHeader(
-      'Strict-Transport-Security',
-      'max-age=31536000; includeSubDomains'
-    );
-  }
-
   next();
+}
+
+function isAllowedRequestOrigin(
+  rawOriginOrReferer: string | undefined,
+  allowedOrigins: Set<string>,
+  req: Request
+): boolean {
+  const normalized = normalizeOrigin(rawOriginOrReferer);
+  if (!normalized) return false;
+  if (allowedOrigins.has(normalized)) return true;
+
+  const rawHost =
+    (typeof req.headers['x-forwarded-host'] === 'string'
+      ? req.headers['x-forwarded-host'].split(',')[0]?.trim()
+      : undefined) || req.headers.host;
+
+  if (!rawHost) return false;
+  try {
+    return new URL(normalized).host === rawHost;
+  } catch {
+    return false;
+  }
 }
 
 function createCorsMiddleware(allowedOrigins: Set<string>) {
@@ -95,19 +113,7 @@ function createCorsMiddleware(allowedOrigins: Set<string>) {
     }
 
     const normalized = normalizeOrigin(requestOrigin);
-    const hostHeader = req.headers.host;
-    const isSameHostOrigin =
-      Boolean(normalized && hostHeader) &&
-      (() => {
-        try {
-          return new URL(normalized!).host === hostHeader;
-        } catch {
-          return false;
-        }
-      })();
-
-    const isAllowed =
-      Boolean(normalized && allowedOrigins.has(normalized)) || isSameHostOrigin;
+    const isAllowed = isAllowedRequestOrigin(requestOrigin, allowedOrigins, req);
 
     if (!isAllowed) {
       if (req.path.startsWith('/api/')) {
@@ -128,6 +134,53 @@ function createCorsMiddleware(allowedOrigins: Set<string>) {
 
     if (req.method === 'OPTIONS') {
       res.status(204).end();
+      return;
+    }
+
+    next();
+  };
+}
+
+const SAFE_HTTP_METHODS = new Set(['GET', 'HEAD', 'OPTIONS']);
+const SIMPLE_FORM_CSRF_TYPES = [
+  'application/x-www-form-urlencoded',
+  'multipart/form-data',
+  'text/plain',
+];
+
+function createCsrfMiddleware(allowedOrigins: Set<string>) {
+  return (req: Request, res: Response, next: NextFunction): void => {
+    if (SAFE_HTTP_METHODS.has(req.method.toUpperCase())) {
+      next();
+      return;
+    }
+
+    const fetchSite = req.headers['sec-fetch-site'];
+    if (typeof fetchSite === 'string' && fetchSite.toLowerCase() === 'cross-site') {
+      res.status(403).json({ error: 'Bu işlem için yetkiniz bulunmuyor.' });
+      return;
+    }
+
+    const originHeader = req.headers.origin;
+    if (typeof originHeader === 'string') {
+      if (!isAllowedRequestOrigin(originHeader, allowedOrigins, req)) {
+        res.status(403).json({ error: 'Bu işlem için yetkiniz bulunmuyor.' });
+        return;
+      }
+    } else if (typeof req.headers.referer === 'string') {
+      if (!isAllowedRequestOrigin(req.headers.referer, allowedOrigins, req)) {
+        res.status(403).json({ error: 'Bu işlem için yetkiniz bulunmuyor.' });
+        return;
+      }
+    }
+
+    const contentType = (req.headers['content-type'] ?? '').toLowerCase();
+    const hasCustomHeader = Boolean(req.headers['x-requested-with']);
+    const isSimpleFormCsrf = SIMPLE_FORM_CSRF_TYPES.some((type) =>
+      contentType.includes(type)
+    );
+    if (isSimpleFormCsrf && !hasCustomHeader) {
+      res.status(403).json({ error: 'Bu işlem için yetkiniz bulunmuyor.' });
       return;
     }
 
@@ -179,6 +232,7 @@ export async function createApp(
 
   app.use(securityHeadersMiddleware);
   app.use(createCorsMiddleware(allowedOrigins));
+  app.use('/api', createCsrfMiddleware(allowedOrigins));
   app.use(express.json({ limit: '16kb' }));
 
   const apiLimiter = createRateLimiter(rateLimitWindowMs, rateLimitMax);

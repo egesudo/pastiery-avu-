@@ -8,7 +8,6 @@ import {
 } from 'motion/react';
 import {
   X,
-  MessageCircle,
   Info,
   ZoomIn,
   ZoomOut,
@@ -22,6 +21,7 @@ import {
 } from '../data/products';
 import { buildWhatsAppUrl } from '../config/site';
 import { ProductPlaceholder } from './ProductPlaceholder';
+import { WhatsAppActionButton } from './WhatsAppActionButton';
 
 interface ProductModalProps {
   product: Product | null;
@@ -499,15 +499,12 @@ export const ProductModal: React.FC<ProductModalProps> = ({
 
               {/* WhatsApp Sipariş / Bilgi Alma CTA */}
               <div className="mt-6">
-                <a
+                <WhatsAppActionButton
                   href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2.5 w-full min-h-[48px] px-6 py-3.5 rounded-full bg-[#4F6A1A] text-white text-sm sm:text-base font-semibold shadow-warm hover:bg-[#415815] active:scale-95 transition-all text-center"
-                >
-                  <MessageCircle className="w-5 h-5 shrink-0" aria-hidden="true" />
-                  <span>WhatsApp ile Sipariş Ver / Bilgi Al</span>
-                </a>
+                  label="WhatsApp ile Sipariş Ver / Bilgi Al"
+                  size="lg"
+                  className="w-full"
+                />
               </div>
             </motion.div>
           </AnimatePresence>

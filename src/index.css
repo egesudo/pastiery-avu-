@@ -154,8 +154,10 @@ h1, h2, h3, h4, .font-serif-display {
   }
   .animate-ken-burns,
   .animate-pastry-fall,
-  .animate-ripple {
+  .animate-ripple,
+  .whatsapp-btn-sheen {
     animation: none !important;
+    transition: none !important;
     transform: none !important;
   }
   .card-zoom-img,

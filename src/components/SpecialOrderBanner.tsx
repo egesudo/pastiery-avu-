@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { MessageCircle } from 'lucide-react';
+import { WhatsAppActionButton } from './WhatsAppActionButton';
 import { buildWhatsAppUrl } from '../config/site';
 import {
   REVEAL_STAGGER_DELAY,
@@ -58,16 +58,15 @@ export const SpecialOrderBanner: React.FC = () => {
           </motion.h2>
         </motion.div>
 
-        <motion.a
-          variants={itemVariants}
-          href={specialOrderWhatsAppUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center justify-center gap-2.5 min-h-[48px] px-7 py-3.5 rounded-full bg-[#B23A48] text-white text-sm sm:text-base font-semibold shadow-sm hover:bg-[#972F3B] active:scale-95 transition-all whitespace-nowrap shrink-0 w-full md:w-auto"
-        >
-          <MessageCircle className="w-4 h-4 shrink-0" aria-hidden="true" />
-          <span>WhatsApp ile Bilgi Alın</span>
-        </motion.a>
+        <motion.div variants={itemVariants} className="w-full md:w-auto shrink-0">
+          <WhatsAppActionButton
+            href={specialOrderWhatsAppUrl}
+            label="WhatsApp ile Bilgi Alın"
+            variant="raspberry"
+            size="lg"
+            className="w-full md:w-auto"
+          />
+        </motion.div>
       </motion.div>
     </motion.section>
   );
