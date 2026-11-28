@@ -6,7 +6,8 @@ import {
   useSpring,
   Variants,
 } from 'motion/react';
-import { ZoomIn, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Icon } from './ui/IconRegistry';
+import { CATEGORY_ICON_NAME_MAP } from './catalog/icons';
 import {
   CATEGORIES,
   PRODUCTS,
@@ -236,7 +237,7 @@ const ProductCard: React.FC<ProductCardProps> = React.memo(
                         : 'İçerik ve Detayları Aç'
                       : 'Detaylar için tekrar dokunun'}
                   </span>
-                  <span>→</span>
+                  <Icon name="arrow-up-right" size={16} />
                 </span>
               </div>
             </div>
@@ -247,7 +248,7 @@ const ProductCard: React.FC<ProductCardProps> = React.memo(
                 aria-hidden="true"
                 className="pointer-events-none absolute bottom-2.5 right-2.5 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#FFFDF9]/92 backdrop-blur-xs text-[#3E2723] text-[11px] font-semibold shadow-xs border border-[#3E2723]/10"
               >
-                <ZoomIn className="w-3 h-3 text-[#4F6A1A]" />
+                <Icon name="zoom-in" size={16} className="text-[#4F6A1A]" />
                 <span>Önizle</span>
               </span>
             )}
@@ -257,8 +258,17 @@ const ProductCard: React.FC<ProductCardProps> = React.memo(
           <div className="p-4 sm:p-5 flex flex-col flex-1 justify-between gap-3">
             <div>
               <div className="flex items-center justify-between gap-2 text-xs font-semibold mb-1.5">
-                <span style={{ color: themeStyle.accentColor }}>
-                  {portionOrWeightText}
+                <span
+                  className="inline-flex items-center gap-1.5"
+                  style={{ color: themeStyle.accentColor }}
+                >
+                  <Icon
+                    name={CATEGORY_ICON_NAME_MAP[product.category]}
+                    size={16}
+                    variant="duotone"
+                    className="transition-transform duration-200 group-hover:-rotate-6 group-hover:scale-110 motion-reduce:transition-none"
+                  />
+                  <span>{portionOrWeightText}</span>
                 </span>
                 {startingPriceLabel && (
                   <span className="text-[#3E2723] font-bold tabular-nums whitespace-nowrap">
@@ -282,9 +292,12 @@ const ProductCard: React.FC<ProductCardProps> = React.memo(
               </span>
               <span
                 aria-hidden="true"
-                className="text-[#4F6A1A] group-hover:translate-x-0.5 transition-transform"
+                className="inline-flex items-center text-[#4F6A1A] group-hover:translate-x-0.5 transition-transform"
               >
-                {isExpanded ? '↓' : '→'}
+                <Icon
+                  name={isExpanded ? 'arrow-down-right' : 'arrow-up-right'}
+                  size={16}
+                />
               </span>
             </div>
           </div>
@@ -516,9 +529,10 @@ export const Catalog: React.FC = () => {
         >
           <motion.div
             variants={itemVariants}
-            className="text-xs sm:text-sm font-semibold tracking-wide text-[#4F6A1A] mb-2"
+            className="inline-flex items-center justify-center gap-1.5 text-xs sm:text-sm font-semibold tracking-wide text-[#4F6A1A] mb-2"
           >
-            Günlük Taze Vitrinimiz
+            <Icon name="taze-gunluk" size={16} variant="duotone" className="text-[#4F6A1A]" />
+            <span>Gönül Rahatlığıyla Seçin</span>
           </motion.div>
           <motion.h2
             variants={itemVariants}
@@ -556,8 +570,8 @@ export const Catalog: React.FC = () => {
             ) : (
               <span>
                 {canHover
-                  ? 'İncelemek için ürün üzerine gelin, detaylar için tıklayın'
-                  : 'Önizlemek için karta dokunun, detaylar için tekrar dokunun'}
+                  ? 'Merak ettiğiniz lezzetin üzerine gelin; içeriğini ve porsiyonunu görmek için tıklayın'
+                  : 'Önizlemek için karta dokunun; içerik ve porsiyon için tekrar dokunun'}
               </span>
             )}
           </p>
@@ -568,18 +582,18 @@ export const Catalog: React.FC = () => {
               onClick={() => scrollTrackBy(-1)}
               disabled={!scrollState.canLeft}
               aria-label="Yatay ürün listesini sola kaydır"
-              className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#FFFDF9] border border-[#3E2723]/14 text-[#3E2723] shadow-xs hover:bg-[#F3ECE1] disabled:opacity-35 disabled:cursor-not-allowed active:scale-95 transition-all cursor-pointer"
+              className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-[#FFFDF9] border border-[#3E2723]/14 text-[#3E2723] shadow-xs hover:bg-[#F3ECE1] disabled:opacity-35 disabled:cursor-not-allowed active:scale-95 transition-all cursor-pointer"
             >
-              <ChevronLeft className="w-5 h-5" aria-hidden="true" />
+              <Icon name="chevron-left" size={20} />
             </button>
             <button
               type="button"
               onClick={() => scrollTrackBy(1)}
               disabled={!scrollState.canRight}
               aria-label="Yatay ürün listesini sağa kaydır"
-              className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#FFFDF9] border border-[#3E2723]/14 text-[#3E2723] shadow-xs hover:bg-[#F3ECE1] disabled:opacity-35 disabled:cursor-not-allowed active:scale-95 transition-all cursor-pointer"
+              className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-[#FFFDF9] border border-[#3E2723]/14 text-[#3E2723] shadow-xs hover:bg-[#F3ECE1] disabled:opacity-35 disabled:cursor-not-allowed active:scale-95 transition-all cursor-pointer"
             >
-              <ChevronRight className="w-5 h-5" aria-hidden="true" />
+              <Icon name="chevron-right" size={20} />
             </button>
           </div>
         </div>
@@ -607,19 +621,28 @@ export const Catalog: React.FC = () => {
               variants={horizontalTrackVariants}
               className="flex items-stretch gap-4 sm:gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth py-3 px-1 [scrollbar-width:thin] [scrollbar-color:rgba(62,39,35,0.22)_transparent]"
             >
-              {filteredProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  variants={hasTabSwitched ? switchCardVariants : itemVariants}
-                  canHover={canHover}
-                  isTouchPreviewed={previewedProduct?.id === product.id}
-                  isExpanded={expandedProduct?.id === product.id}
-                  prefersReducedMotion={prefersReducedMotion}
-                  onCardClick={handleCardClick}
-                  onHoverChange={setHoveredProduct}
-                />
-              ))}
+              {filteredProducts.length > 0 ? (
+                filteredProducts.map((product) => (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    variants={hasTabSwitched ? switchCardVariants : itemVariants}
+                    canHover={canHover}
+                    isTouchPreviewed={previewedProduct?.id === product.id}
+                    isExpanded={expandedProduct?.id === product.id}
+                    prefersReducedMotion={prefersReducedMotion}
+                    onCardClick={handleCardClick}
+                    onHoverChange={setHoveredProduct}
+                  />
+                ))
+              ) : (
+                <div className="w-full py-12 flex flex-col items-center justify-center text-center gap-3 rounded-[24px] bg-[#FFFDF9]/80 border border-[#3E2723]/10">
+                  <Icon name="bos-tabak" size={32} variant="duotone" className="text-[#3B2314]" />
+                  <p className="text-sm font-medium text-[#5D4037]">
+                    Bu kategoride şu an gösterilecek ürün bulunmuyor.
+                  </p>
+                </div>
+              )}
             </motion.div>
           </SauceTransition>
         </div>
@@ -638,8 +661,9 @@ export const Catalog: React.FC = () => {
           variants={itemVariants}
           className="mt-8 text-center text-xs sm:text-sm text-[#5D4037]"
         >
-          Görseller ve belirtilen fiyatlar temsilidir. Güncel vitrin stoğu ve özel siparişler için
-          ürün detay panelinden WhatsApp üzerinden bize ulaşabilirsiniz.
+          Görseller ve belirtilen fiyatlar temsilidir. Evinizdeki özel anlar veya günlük vitrin
+          stoğu için beğendiğiniz ürünün içinden tek dokunuşla WhatsApp üzerinden bize
+          yazabilirsiniz.
         </motion.p>
       </div>
     </motion.section>

@@ -51,6 +51,7 @@ const CategoryTabButton: React.FC<CategoryTabButtonProps> = React.memo(
   }) => {
     const Icon = CATEGORY_ICON_MAP[cat.id];
     const label = CATEGORY_TAB_LABELS[cat.id] ?? cat.label;
+    const [sprinkleKey, setSprinkleKey] = useState<number>(0);
 
     const handleRef = useCallback(
       (el: HTMLButtonElement | null) => {
@@ -60,8 +61,11 @@ const CategoryTabButton: React.FC<CategoryTabButtonProps> = React.memo(
     );
 
     const handleClick = useCallback(() => {
+      if (!prefersReducedMotion) {
+        setSprinkleKey((prev) => prev + 1);
+      }
       onActivate(cat.id);
-    }, [cat.id, onActivate]);
+    }, [cat.id, onActivate, prefersReducedMotion]);
 
     const handleButtonKeyDown = useCallback(
       (e: React.KeyboardEvent<HTMLButtonElement>) => {
@@ -102,11 +106,38 @@ const CategoryTabButton: React.FC<CategoryTabButtonProps> = React.memo(
           </motion.span>
         )}
 
+        {sprinkleKey > 0 && isSelected && !prefersReducedMotion && (
+          <span
+            key={sprinkleKey}
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 overflow-visible"
+          >
+            {[
+              { x: -18, y: -16, color: '#C98A3E', rot: -25 },
+              { x: 16, y: -18, color: '#D9566B', rot: 22 },
+              { x: -24, y: 12, color: '#8FA85B', rot: 35 },
+              { x: 22, y: 14, color: '#F3DFB5', rot: -30 },
+            ].map((dot, idx) => (
+              <motion.span
+                key={idx}
+                initial={{ opacity: 0.95, x: 0, y: 0, scale: 0.6, rotate: 0 }}
+                animate={{ opacity: 0, x: dot.x, y: dot.y, scale: 1.1, rotate: dot.rot }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                style={{ backgroundColor: dot.color }}
+                className="absolute left-1/2 top-1/2 w-1.5 h-1.5 rounded-full"
+              />
+            ))}
+          </span>
+        )}
+
         <span
+          key={`tab-icon-${sprinkleKey}`}
           className={`relative z-10 inline-flex items-center justify-center shrink-0 ${
             prefersReducedMotion
               ? ''
-              : 'transition-transform duration-[180ms] ease-out group-hover:-translate-y-0.5 group-hover:-rotate-6 group-focus-visible:-translate-y-0.5'
+              : `transition-transform duration-[180ms] ease-out group-hover:-translate-y-0.5 group-hover:-rotate-6 group-focus-visible:-translate-y-0.5 ${
+                  isSelected ? 'scale-110 -rotate-3' : ''
+                } ${sprinkleKey > 0 && isSelected ? 'icon-pop-active' : ''}`
           }`}
         >
           <Icon isActive={isSelected} className="w-5 h-5" />

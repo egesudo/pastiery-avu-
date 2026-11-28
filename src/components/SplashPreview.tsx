@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { RotateCcw, ArrowLeft, Play } from 'lucide-react';
+import { Icon } from './ui/IconRegistry';
 import { Splash, SplashPhase } from './Splash';
 import { siteConfig } from '../config/site';
 
@@ -76,7 +76,7 @@ export const SplashPreview: React.FC<SplashPreviewProps> = ({ onExitPreview }) =
             onClick={handleReplay}
             className="inline-flex items-center justify-center gap-2 min-h-[48px] px-7 py-3.5 rounded-full bg-[#3E2723] text-[#FFFBEF] text-sm sm:text-base font-semibold shadow-warm hover:bg-[#5D4037] active:scale-95 transition-all cursor-pointer"
           >
-            <RotateCcw className="w-4 h-4" aria-hidden="true" />
+            <Icon name="rotate-ccw" size={16} />
             <span>Tekrar Oynat (3.6 sn)</span>
           </button>
 
@@ -85,7 +85,7 @@ export const SplashPreview: React.FC<SplashPreviewProps> = ({ onExitPreview }) =
             onClick={onExitPreview}
             className="inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3.5 rounded-full bg-[#FFF8E7] text-[#3E2723] border border-[#E3CFA3] text-sm sm:text-base font-semibold hover:bg-[#F3E3C3] active:scale-95 transition-all cursor-pointer"
           >
-            <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+            <Icon name="arrow-left" size={16} />
             <span>Ana Vitrine Dön</span>
           </button>
         </div>
@@ -99,7 +99,7 @@ export const SplashPreview: React.FC<SplashPreviewProps> = ({ onExitPreview }) =
           aria-label="Karşılama animasyonunu baştan tekrar oynat"
           className="inline-flex items-center gap-2 min-h-[44px] px-4 py-2 rounded-full bg-[#3E2723] text-[#FFFBEF] border border-[#E3CFA3] text-xs sm:text-sm font-semibold shadow-warm hover:bg-[#5D4037] active:scale-95 transition-transform cursor-pointer"
         >
-          <Play className="w-3.5 h-3.5 fill-current" aria-hidden="true" />
+          <Icon name="play" size={16} variant="solid" />
           <span>Tekrar Oynat</span>
         </button>
       </div>

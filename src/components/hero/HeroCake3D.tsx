@@ -11,7 +11,7 @@ import { ContactShadows } from '@react-three/drei/core/ContactShadows';
 import { Environment } from '@react-three/drei/core/Environment';
 import { Lightformer } from '@react-three/drei/core/Lightformer';
 import { OrbitControls } from '@react-three/drei/core/OrbitControls';
-import { Hand, ArrowDownRight, MapPin } from 'lucide-react';
+import { Icon } from '../ui/IconRegistry';
 import {
   HERO_CAKE_CONFIG,
   HERO_COLORS,
@@ -577,7 +577,7 @@ const HeroCake3D: React.FC<HeroCake3DProps> = ({
             hasInteracted ? 'opacity-0' : 'opacity-85'
           }`}
         >
-          <Hand className="w-3.5 h-3.5 text-[#7A4A2B]" aria-hidden="true" />
+          <Icon name="hand" size={16} className="text-[#7A4A2B]" />
           <span>Sürükle ve çevir</span>
         </div>
 
@@ -593,16 +593,17 @@ const HeroCake3D: React.FC<HeroCake3DProps> = ({
             type="button"
             tabIndex={isSliceOpen ? 0 : -1}
             onClick={handleNavigateToFreshCakes}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#FFFDF9]/95 text-[#3E2723] border border-[#3E2723]/18 text-xs font-semibold shadow-warm hover:bg-[#F3ECE1] active:scale-95 transition-all cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#FFFDF9]/95 text-[#3E2723] border border-[#3E2723]/18 text-xs font-semibold shadow-warm hover:bg-[#F3ECE1] active:scale-[0.96] transition-all cursor-pointer"
           >
+            <Icon name="yas-pasta" size={16} variant="duotone" className="text-[#3B2314]" />
             <span>Yaş Pastalarımız</span>
-            <ArrowDownRight className="w-3.5 h-3.5 text-[#4F6A1A]" aria-hidden="true" />
+            <Icon name="arrow-down-right" size={16} className="text-[#4F6A1A]" />
           </button>
         </div>
 
         {/* Şube Rozeti (onaylanan tasarım kararına göre sağ kolon sahne köşesinde korunur) */}
         <div className="pointer-events-none absolute bottom-3 left-3 sm:bottom-4 sm:left-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFFDF9]/92 border border-[#3E2723]/10 text-[#3E2723] text-xs font-semibold shadow-warm">
-          <MapPin className="w-3.5 h-3.5 text-[#B23A48] shrink-0" aria-hidden="true" />
+          <Icon name="pin-kiraz" size={16} variant="duotone" className="text-[#3B2314]" />
           <span>{branchName}</span>
           {openStatus && (
             <>

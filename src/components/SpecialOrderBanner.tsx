@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { WhatsAppActionButton } from './WhatsAppActionButton';
+import { Icon } from './ui/IconRegistry';
 import { buildWhatsAppUrl } from '../config/site';
 import {
   REVEAL_STAGGER_DELAY,
@@ -45,16 +46,26 @@ export const SpecialOrderBanner: React.FC = () => {
         <motion.div variants={textGroupVariants} className="max-w-2xl">
           <motion.div
             variants={itemVariants}
-            className="text-xs sm:text-sm font-semibold tracking-wide text-[#B23A48] mb-1.5"
+            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold tracking-wide text-[#B23A48] mb-1.5"
           >
-            Özel Kutlamalar &amp; Davetler
+            <Icon name="parilti" size={16} variant="duotone" className="text-[#B23A48]" />
+            <span>Kutlamalarınız Bizimle Tatlansın</span>
           </motion.div>
           <motion.h2
             variants={itemVariants}
-            className="font-serif-display font-bold text-xl sm:text-2xl text-[#3E2723] leading-snug"
+            className="font-serif-display font-bold text-xl sm:text-2xl text-[#3E2723] leading-snug flex items-start gap-2.5"
             style={{ textWrap: 'balance' }}
           >
-            Doğum günü, nişan, bayram… Özel anlarınız için pasta ve tatlı siparişi
+            <Icon
+              name="ozenli-paket"
+              size={24}
+              variant="duotone"
+              className="text-[#3B2314] mt-0.5 hidden sm:inline-block"
+            />
+            <span>
+              Doğum günü, nişan, bayram ya da sevdiklerinize sıcacık bir sürpriz… Size özel
+              hazırlayalım
+            </span>
           </motion.h2>
         </motion.div>
 

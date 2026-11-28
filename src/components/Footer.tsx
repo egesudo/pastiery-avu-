@@ -1,5 +1,7 @@
 import React from 'react';
 import { Logo } from './Logo';
+import { Icon } from './ui/IconRegistry';
+import { CATEGORY_ICON_NAME_MAP } from './catalog/icons';
 import { siteConfig } from '../config/site';
 import { CATEGORIES, ProductCategory } from '../data/products';
 import {
@@ -53,14 +55,21 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
               </div>
             </div>
 
-            <address className="not-italic text-sm text-[#5D4037] leading-relaxed max-w-sm">
-              {siteConfig.address}
+            <address className="not-italic flex items-start gap-2 text-sm text-[#5D4037] leading-relaxed max-w-sm">
+              <Icon
+                name="pin-kiraz"
+                size={16}
+                variant="duotone"
+                className="text-[#3B2314] mt-0.5"
+              />
+              <span>{siteConfig.address}</span>
             </address>
 
             {/* Çalışma saatleri yalnızca config'te varsa gösterilir */}
             {siteConfig.hours && (
-              <p className="mt-3 text-sm font-medium text-[#3E2723]">
-                Çalışma Saatleri: {siteConfig.hours.display}
+              <p className="mt-3 flex items-center gap-2 text-sm font-medium text-[#3E2723]">
+                <Icon name="clock" size={16} className="text-[#4F6A1A]" />
+                <span>Çalışma Saatleri: {siteConfig.hours.display}</span>
               </p>
             )}
 
@@ -73,9 +82,10 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Instagram sayfamız"
-                    className="inline-flex items-center min-h-[44px] px-4 py-2 rounded-full bg-[#FFFDF9] text-xs font-semibold text-[#3E2723] border border-[#3E2723]/12 hover:bg-[#FAF6F0] transition-colors"
+                    className="inline-flex items-center gap-2 min-h-[44px] px-4 py-2 rounded-full bg-[#FFFDF9] text-xs font-semibold text-[#3E2723] border border-[#3E2723]/12 hover:bg-[#FAF6F0] transition-colors"
                   >
-                    Instagram
+                    <Icon name="instagram" size={16} />
+                    <span>Instagram</span>
                   </a>
                 )}
                 {safeFacebookUrl && (
@@ -104,9 +114,15 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
                   <a
                     href="#lezzetlerimiz"
                     onClick={() => handleCategoryClick(category.id)}
-                    className="inline-flex items-center py-1 hover:text-[#4F6A1A] transition-colors"
+                    className="group/catlink inline-flex items-center gap-2 py-1 hover:text-[#4F6A1A] transition-colors"
                   >
-                    {category.label}
+                    <Icon
+                      name={CATEGORY_ICON_NAME_MAP[category.id]}
+                      size={16}
+                      variant="duotone"
+                      className="text-[#3B2314] transition-transform duration-200 group-hover/catlink:-rotate-6"
+                    />
+                    <span>{category.label}</span>
                   </a>
                 </li>
               ))}
@@ -125,18 +141,18 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
                 </a>
               </li>
               <li>
-                <a href="#lezzetlerimiz" className="inline-flex items-center py-1 hover:text-[#4F6A1A] transition-colors">
-                  Lezzetlerimiz
-                </a>
-              </li>
-              <li>
                 <a href="#atmosfer" className="inline-flex items-center py-1 hover:text-[#4F6A1A] transition-colors">
-                  Atmosferimiz
+                  Sıcak Yuva, Taze Tezgâh
                 </a>
               </li>
               <li>
                 <a href="#hakkimizda" className="inline-flex items-center py-1 hover:text-[#4F6A1A] transition-colors">
                   Hakkımızda
+                </a>
+              </li>
+              <li>
+                <a href="#lezzetlerimiz" className="inline-flex items-center py-1 hover:text-[#4F6A1A] transition-colors">
+                  Lezzetlerimiz
                 </a>
               </li>
               <li>

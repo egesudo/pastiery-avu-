@@ -6,14 +6,7 @@ import {
   useReducedMotion,
   useSpring,
 } from 'motion/react';
-import {
-  X,
-  Info,
-  ZoomIn,
-  ZoomOut,
-  ChevronLeft,
-  ChevronRight,
-} from 'lucide-react';
+import { Icon } from './ui/IconRegistry';
 import {
   Product,
   CakePortion,
@@ -274,7 +267,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
               aria-label="Hızlı bakış penceresini kapat"
               className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-[#F3ECE1] text-[#3E2723] hover:bg-[#E7DDD0] active:scale-95 transition-all cursor-pointer shrink-0"
             >
-              <X className="w-5 h-5" aria-hidden="true" />
+              <Icon name="close" size={20} />
             </button>
           </div>
 
@@ -287,7 +280,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                 aria-label="Önceki ürün"
                 className="hidden sm:inline-flex items-center justify-center w-11 h-11 rounded-full bg-[#F3ECE1] text-[#3E2723] hover:bg-[#E7DDD0] active:scale-95 transition-all cursor-pointer shrink-0 shadow-xs"
               >
-                <ChevronLeft className="w-5 h-5" aria-hidden="true" />
+                <Icon name="chevron-left" size={20} />
               </button>
             )}
 
@@ -364,9 +357,9 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                   className="absolute top-2.5 right-2.5 inline-flex items-center justify-center w-11 h-11 rounded-full bg-[#FFFDF9]/92 backdrop-blur-xs text-[#3E2723] hover:bg-white active:scale-95 transition-all cursor-pointer shadow-xs border border-[#3E2723]/10"
                 >
                   {isZoomed ? (
-                    <ZoomOut className="w-4 h-4 text-[#B23A48]" aria-hidden="true" />
+                    <Icon name="zoom-out" size={16} className="text-[#B23A48]" />
                   ) : (
-                    <ZoomIn className="w-4 h-4 text-[#4F6A1A]" aria-hidden="true" />
+                    <Icon name="zoom-in" size={16} className="text-[#4F6A1A]" />
                   )}
                 </button>
               )}
@@ -379,7 +372,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                 aria-label="Sonraki ürün"
                 className="hidden sm:inline-flex items-center justify-center w-11 h-11 rounded-full bg-[#F3ECE1] text-[#3E2723] hover:bg-[#E7DDD0] active:scale-95 transition-all cursor-pointer shrink-0 shadow-xs"
               >
-                <ChevronRight className="w-5 h-5" aria-hidden="true" />
+                <Icon name="chevron-right" size={20} />
               </button>
             )}
           </div>
@@ -391,9 +384,9 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                 type="button"
                 onClick={() => handleStepProduct(-1)}
                 aria-label="Önceki ürün"
-                className="sm:hidden inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#F3ECE1] text-[#3E2723] active:scale-95 transition-all cursor-pointer"
+                className="sm:hidden inline-flex items-center justify-center w-11 h-11 rounded-full bg-[#F3ECE1] text-[#3E2723] active:scale-95 transition-all cursor-pointer"
               >
-                <ChevronLeft className="w-4 h-4" aria-hidden="true" />
+                <Icon name="chevron-left" size={16} />
               </button>
             )}
             <p className="text-center text-xs text-[#5D4037]/80">
@@ -406,9 +399,9 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                 type="button"
                 onClick={() => handleStepProduct(1)}
                 aria-label="Sonraki ürün"
-                className="sm:hidden inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#F3ECE1] text-[#3E2723] active:scale-95 transition-all cursor-pointer"
+                className="sm:hidden inline-flex items-center justify-center w-11 h-11 rounded-full bg-[#F3ECE1] text-[#3E2723] active:scale-95 transition-all cursor-pointer"
               >
-                <ChevronRight className="w-4 h-4" aria-hidden="true" />
+                <Icon name="chevron-right" size={16} />
               </button>
             )}
           </div>
@@ -488,10 +481,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
 
               {/* Sabit Alerjen ve İçerik Notu */}
               <div className="mt-5 p-3.5 rounded-2xl bg-[#F3ECE1]/80 border border-[#3E2723]/8 flex items-start gap-2.5">
-                <Info
-                  className="w-4 h-4 text-[#5D4037] shrink-0 mt-0.5"
-                  aria-hidden="true"
-                />
+                <Icon name="info" size={16} className="text-[#5D4037] mt-0.5" />
                 <p className="text-xs sm:text-sm text-[#5D4037] leading-relaxed">
                   İçerik ve alerjen bilgisi için bize WhatsApp&apos;tan ulaşabilirsiniz.
                 </p>

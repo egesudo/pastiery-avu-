@@ -5,15 +5,7 @@ import {
   useMotionValue,
   useSpring,
 } from 'motion/react';
-import {
-  X,
-  Info,
-  ZoomIn,
-  ZoomOut,
-  ChevronLeft,
-  ChevronRight,
-  AlertTriangle,
-} from 'lucide-react';
+import { Icon } from '../ui/IconRegistry';
 import {
   Product,
   CakePortion,
@@ -247,7 +239,7 @@ export const ProductDetailPanel: React.FC<ProductDetailPanelProps> = ({
                           aria-label="Önceki ürüne geç"
                           className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-[#F3ECE1] text-[#3E2723] hover:bg-[#E7DDD0] active:scale-95 transition-all cursor-pointer"
                         >
-                          <ChevronLeft className="w-5 h-5" aria-hidden="true" />
+                          <Icon name="chevron-left" size={20} />
                         </button>
                         <button
                           type="button"
@@ -255,7 +247,7 @@ export const ProductDetailPanel: React.FC<ProductDetailPanelProps> = ({
                           aria-label="Sonraki ürüne geç"
                           className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-[#F3ECE1] text-[#3E2723] hover:bg-[#E7DDD0] active:scale-95 transition-all cursor-pointer"
                         >
-                          <ChevronRight className="w-5 h-5" aria-hidden="true" />
+                          <Icon name="chevron-right" size={20} />
                         </button>
                       </>
                     )}
@@ -266,7 +258,7 @@ export const ProductDetailPanel: React.FC<ProductDetailPanelProps> = ({
                       aria-label="Ürün detay panelini kapat"
                       className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-[#3E2723] text-[#FFFDF9] hover:bg-[#5D4037] active:scale-95 transition-all cursor-pointer"
                     >
-                      <X className="w-5 h-5" aria-hidden="true" />
+                      <Icon name="close" size={20} />
                     </button>
                   </div>
                 </div>
@@ -337,9 +329,9 @@ export const ProductDetailPanel: React.FC<ProductDetailPanelProps> = ({
                             className="absolute top-3 right-3 inline-flex items-center justify-center w-11 h-11 rounded-full bg-[#FFFDF9]/92 backdrop-blur-xs text-[#3E2723] hover:bg-white active:scale-95 transition-all cursor-pointer shadow-xs border border-[#3E2723]/10"
                           >
                             {isZoomed ? (
-                              <ZoomOut className="w-4 h-4 text-[#B23A48]" aria-hidden="true" />
+                              <Icon name="zoom-out" size={16} className="text-[#B23A48]" />
                             ) : (
-                              <ZoomIn className="w-4 h-4 text-[#4F6A1A]" aria-hidden="true" />
+                              <Icon name="zoom-in" size={16} className="text-[#4F6A1A]" />
                             )}
                           </button>
                         )}
@@ -377,8 +369,9 @@ export const ProductDetailPanel: React.FC<ProductDetailPanelProps> = ({
                               {formatPriceTRY(activePrice)}
                             </div>
                           </div>
-                          <span className="text-xs font-medium text-[#5D4037]/85">
-                            Günlük taze hazırlık
+                          <span className="inline-flex items-center gap-1.5 text-xs font-medium text-[#5D4037]/85">
+                            <Icon name="taze-gunluk" size={16} variant="duotone" className="text-[#4F6A1A]" />
+                            <span>Günlük taze hazırlık</span>
                           </span>
                         </div>
 
@@ -426,7 +419,7 @@ export const ProductDetailPanel: React.FC<ProductDetailPanelProps> = ({
                       {/* İçindekiler */}
                       <div className="pt-1 border-t border-[#3E2723]/10">
                         <h4 className="text-xs sm:text-sm font-bold text-[#3E2723] mb-1.5 flex items-center gap-1.5">
-                          <Info className="w-4 h-4 text-[#4F6A1A] shrink-0" aria-hidden="true" />
+                          <Icon name="info" size={16} className="text-[#4F6A1A]" />
                           <span>İçindekiler</span>
                         </h4>
                         <p className="text-xs sm:text-sm text-[#5D4037] leading-relaxed">
@@ -437,7 +430,7 @@ export const ProductDetailPanel: React.FC<ProductDetailPanelProps> = ({
                       {/* Alerjen Bilgileri */}
                       <div className="p-3.5 sm:p-4 rounded-2xl bg-[#F3ECE1]/85 border border-[#3E2723]/12">
                         <h4 className="text-xs sm:text-sm font-bold text-[#B23A48] mb-1 flex items-center gap-1.5">
-                          <AlertTriangle className="w-4 h-4 shrink-0" aria-hidden="true" />
+                          <Icon name="alert" size={16} />
                           <span>Alerjen Bilgileri</span>
                         </h4>
                         <p className="text-xs sm:text-sm font-medium text-[#3E2723] leading-relaxed">

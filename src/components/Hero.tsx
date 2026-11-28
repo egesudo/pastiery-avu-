@@ -13,7 +13,7 @@ import {
   useSpring,
   useTransform,
 } from 'motion/react';
-import { ArrowDownRight, Store, MapPin } from 'lucide-react';
+import { Icon } from './ui/IconRegistry';
 import { siteConfig, getStoreOpenStatus } from '../config/site';
 import { HeroHeading } from './hero/HeroHeading';
 import { BakerMascot } from './hero/BakerMascot';
@@ -204,9 +204,11 @@ export const Hero: React.FC<HeroProps> = ({ splashDone = true }) => {
       <div className="relative w-full h-[290px] sm:h-[320px] lg:h-[min(70vh,560px)] rounded-[24px] overflow-hidden">
         <CakePoster isLoading={!canShow3D && qualityInfo.webglSupported} />
         <div className="pointer-events-none absolute bottom-3 left-3 sm:bottom-4 sm:left-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FFFDF9]/92 border border-[#3E2723]/10 text-[#3E2723] text-xs font-semibold shadow-warm">
-          <MapPin
-            className="w-3.5 h-3.5 text-[#B23A48] shrink-0"
-            aria-hidden="true"
+          <Icon
+            name="pin-kiraz"
+            size={16}
+            variant="duotone"
+            className="text-[#3B2314]"
           />
           <span>{siteConfig.branchName}</span>
           {openStatus && (
@@ -296,9 +298,10 @@ export const Hero: React.FC<HeroProps> = ({ splashDone = true }) => {
             variants={itemVariants}
             className="text-base sm:text-lg text-[#5D4037] leading-relaxed max-w-xl mb-8"
           >
-            Halkalı Merkez&apos;deki mağazamızda günlük hazırlanan yaş pastalar,
-            özel dolgulu ekler ve eşsiz sütlü tatlılarla özel anlarınıza tat
-            katıyoruz.
+            Kapımızdan adım attığınız anda taze pişmiş hamur ve çikolata kokusuyla
+            karşılanın. Halkalı Merkez&apos;deki sıcak yuvamızda her gün özenle
+            hazırladığımız yaş pastalar, eklerler ve sütlü tatlılarla evinizdeki
+            tatlı molalara eşlik ediyoruz.
           </motion.p>
 
           <motion.div
@@ -307,19 +310,30 @@ export const Hero: React.FC<HeroProps> = ({ splashDone = true }) => {
           >
             <a
               href="#lezzetlerimiz"
-              className="inline-flex items-center justify-center gap-2 min-h-[48px] px-7 py-3.5 rounded-full bg-[#4F6A1A] text-white text-sm sm:text-base font-semibold shadow-warm hover:bg-[#415815] active:scale-95 transition-all whitespace-nowrap shrink-0"
+              className="group/explore inline-flex items-center justify-center gap-2 min-h-[48px] px-7 py-3.5 rounded-full bg-[#4F6A1A] text-white text-sm sm:text-base font-semibold shadow-warm hover:bg-[#415815] active:scale-[0.96] transition-all whitespace-nowrap shrink-0"
             >
-              <span>Menüyü Keşfet</span>
-              <ArrowDownRight className="w-4 h-4" aria-hidden="true" />
+              <Icon
+                name="yas-pasta"
+                size={20}
+                variant="duotone"
+                style={{ ['--icon-accent' as string]: 'var(--icon-vanilya)' }}
+                className="transition-transform duration-200 group-hover/explore:-rotate-6"
+              />
+              <span>Lezzetleri Keşfet</span>
+              <Icon
+                name="arrow-down-right"
+                size={16}
+                className="transition-transform duration-200 group-hover/explore:translate-x-0.5 group-hover/explore:translate-y-0.5"
+              />
             </a>
 
             <div className="relative inline-flex items-center mr-6 sm:mr-8">
               <a
                 href="#atmosfer"
-                className="group/store relative inline-flex items-center justify-center gap-2 min-h-[48px] pl-6 pr-11 sm:pl-7 sm:pr-12 py-3.5 rounded-full bg-[#FFFDF9] text-[#3E2723] border border-[#3E2723]/18 text-sm sm:text-base font-semibold shadow-xs hover:bg-[#F3ECE1] active:scale-95 transition-all whitespace-nowrap shrink-0"
+                className="group/store relative inline-flex items-center justify-center gap-2 min-h-[48px] pl-6 pr-11 sm:pl-7 sm:pr-12 py-3.5 rounded-full bg-[#FFFDF9] text-[#3E2723] border border-[#3E2723]/18 text-sm sm:text-base font-semibold shadow-xs hover:bg-[#F3ECE1] active:scale-[0.96] transition-all whitespace-nowrap shrink-0"
               >
-                <Store className="w-4 h-4 text-[#5D4037]" aria-hidden="true" />
-                <span>Mağazamızı Görün</span>
+                <Icon name="store" size={16} className="text-[#5D4037]" />
+                <span>Sıcak Yuvamızı Görün</span>
                 <BakerMascot className="pointer-events-none absolute -right-7 sm:-right-8 top-1/2 -translate-y-[52%] w-[54px] h-[62px] sm:w-[62px] sm:h-[70px] drop-shadow-[0_3px_6px_rgba(59,35,20,0.12)] transition-transform duration-300 group-hover/store:-translate-y-[56%] group-hover/store:rotate-3 motion-reduce:transition-none motion-reduce:group-hover/store:transform-none" />
               </a>
             </div>

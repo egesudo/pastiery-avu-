@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { MapPin, Copy, Check, Navigation, Clock } from 'lucide-react';
+import { Icon } from './ui/IconRegistry';
 import { siteConfig, buildWhatsAppUrl } from '../config/site';
 import { WhatsAppActionButton } from './WhatsAppActionButton';
 import {
@@ -79,15 +79,16 @@ export const LocationContact: React.FC = () => {
       whileInView="visible"
       viewport={SECTION_VIEWPORT}
       variants={sectionVariants}
-      className="scroll-mt-24 py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"
+      className="scroll-mt-24 pt-10 sm:pt-14 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"
     >
       {/* Bölüm Başlığı (60ms staggerChildren: Kicker -> H2 -> Paragraph) */}
       <motion.div variants={headerBlockVariants} className="max-w-2xl mb-10">
         <motion.div
           variants={itemVariants}
-          className="text-xs sm:text-sm font-semibold tracking-wide text-[#4F6A1A] mb-2"
+          className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold tracking-wide text-[#4F6A1A] mb-2"
         >
-          Bize Ulaşın
+          <Icon name="pin-kiraz" size={16} variant="duotone" className="text-[#4F6A1A]" />
+          <span>Her Zaman Bekleriz</span>
         </motion.div>
         <motion.h2
           variants={itemVariants}
@@ -98,10 +99,11 @@ export const LocationContact: React.FC = () => {
         </motion.h2>
         <motion.p
           variants={itemVariants}
-          className="mt-3 text-sm sm:text-base text-[#5D4037]"
+          className="mt-3 text-sm sm:text-base text-[#5D4037] leading-relaxed"
         >
-          Küçükçekmece Halkalı Merkez&apos;deki mağazamıza uğrayabilir veya WhatsApp
-          hattımızdan bilgi alabilirsiniz.
+          Sıcak bir çay molası vermek ya da taptaze tatlılarımızdan seçmek için Halkalı
+          Merkez&apos;deki kapımız size her zaman açık. Adresi tek dokunuşla kopyalayabilir,
+          yol tarifi alabilir veya WhatsApp&apos;tan hemen bize ulaşabilirsiniz.
         </motion.p>
       </motion.div>
 
@@ -119,7 +121,7 @@ export const LocationContact: React.FC = () => {
               variants={itemVariants}
               className="inline-flex items-center gap-2 text-xs font-semibold text-[#B23A48] mb-3"
             >
-              <MapPin className="w-4 h-4 shrink-0" aria-hidden="true" />
+              <Icon name="pin-kiraz" size={16} variant="duotone" className="text-[#3B2314]" />
               <span>{siteConfig.branchName}</span>
             </motion.div>
 
@@ -143,7 +145,7 @@ export const LocationContact: React.FC = () => {
                 variants={itemVariants}
                 className="mt-4 flex items-center gap-2.5 text-sm text-[#5D4037]"
               >
-                <Clock className="w-4 h-4 text-[#4F6A1A] shrink-0" aria-hidden="true" />
+                <Icon name="clock" size={16} className="text-[#4F6A1A]" />
                 <span>Çalışma Saatleri: {siteConfig.hours.display}</span>
               </motion.div>
             )}
@@ -164,12 +166,12 @@ export const LocationContact: React.FC = () => {
               >
                 {copied ? (
                   <>
-                    <Check className="w-4 h-4 text-[#4F6A1A] shrink-0" aria-hidden="true" />
+                    <Icon name="onay" size={16} variant="duotone" className="text-[#4F6A1A]" />
                     <span className="text-[#4F6A1A]">Kopyalandı!</span>
                   </>
                 ) : (
                   <>
-                    <Copy className="w-4 h-4 shrink-0" aria-hidden="true" />
+                    <Icon name="copy" size={16} />
                     <span>Adresi Kopyala</span>
                   </>
                 )}
@@ -180,9 +182,9 @@ export const LocationContact: React.FC = () => {
                 href={safeMapsDirectionsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 min-h-[48px] px-5 py-3 rounded-full bg-[#3E2723] text-[#FFFDF9] text-sm font-semibold hover:bg-[#4E342E] active:scale-95 transition-all text-center"
+                className="inline-flex items-center justify-center gap-2 min-h-[48px] px-5 py-3 rounded-full bg-[#3E2723] text-[#FFFDF9] text-sm font-semibold hover:bg-[#4E342E] active:scale-[0.96] transition-all text-center"
               >
-                <Navigation className="w-4 h-4 shrink-0" aria-hidden="true" />
+                <Icon name="navigation" size={16} />
                 <span>Yol Tarifi Al</span>
               </a>
             </div>
@@ -217,14 +219,18 @@ export const LocationContact: React.FC = () => {
 
           {/* Harita yüklenemezse veya engellenirse her zaman görünür kalan alt yol tarifi çubuğu */}
           <div className="px-4 py-2.5 bg-[#FFFDF9]/95 border-t border-[#3E2723]/10 flex flex-wrap items-center justify-between gap-2 text-xs text-[#5D4037]">
-            <span>Karadut Sokağı No:14, Halkalı Merkez / Küçükçekmece</span>
+            <span className="inline-flex items-center gap-1.5">
+              <Icon name="map-pin" size={16} className="text-[#B23A48]" />
+              <span>Karadut Sokağı No:14, Halkalı Merkez / Küçükçekmece</span>
+            </span>
             <a
               href={safeMapsDirectionsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-semibold text-[#4F6A1A] hover:underline"
+              className="inline-flex items-center gap-1 font-semibold text-[#4F6A1A] hover:underline"
             >
-              Google Haritalar&apos;da Aç →
+              <span>Google Haritalar&apos;da Aç</span>
+              <Icon name="arrow-up-right" size={16} />
             </a>
           </div>
         </motion.div>

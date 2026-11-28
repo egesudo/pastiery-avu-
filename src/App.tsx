@@ -14,6 +14,8 @@ import { Atmosphere } from './components/Atmosphere';
 import { LocationContact } from './components/LocationContact';
 import { Footer } from './components/Footer';
 import { JsonLd } from './components/JsonLd';
+import { ScrollToTopButton } from './components/ScrollToTopButton';
+import { PastrySectionWave } from './components/icons/BakeryDividers';
 
 function checkIsSplashPreviewRoute(): boolean {
   if (typeof window === 'undefined') return false;
@@ -117,13 +119,17 @@ export default function App() {
 
         <main id="main-content" className="flex-1">
           <Hero splashDone={!showSplash} />
+          <PastrySectionWave variant="hero-yuva" />
+          <Atmosphere />
+          <PastrySectionWave variant="yuva-lezzet" />
           <Catalog />
           <SpecialOrderBanner />
-          <Atmosphere />
+          <PastrySectionWave variant="lezzet-konum" />
           <LocationContact />
         </main>
 
         <Footer />
+        <ScrollToTopButton />
       </div>
     </div>
   );

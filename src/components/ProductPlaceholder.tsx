@@ -1,5 +1,7 @@
 import React from 'react';
 import { ProductCategory } from '../data/products';
+import { Icon } from './ui/IconRegistry';
+import { CATEGORY_ICON_NAME_MAP } from './catalog/icons';
 
 interface ProductPlaceholderProps {
   category: ProductCategory;
@@ -9,7 +11,7 @@ interface ProductPlaceholderProps {
 
 /**
  * Görseli olmayan veya yüklenemeyen ürünler için kategoriye özel,
- * marka renkli SVG desenli zarif yer tutucu.
+ * merkezi IconRegistry tabanlı zarif yer tutucu.
  */
 export const ProductPlaceholder: React.FC<ProductPlaceholderProps> = ({
   category,
@@ -54,108 +56,14 @@ export const ProductPlaceholder: React.FC<ProductPlaceholderProps> = ({
         <rect width="100%" height="100%" fill={`url(#pattern-${category})`} />
       </svg>
 
-      {/* Kategoriye özel merkez vektör ikon */}
+      {/* Kategoriye özel merkez ikon */}
       <div className="relative z-10 w-16 h-16 rounded-full bg-[#FFFDF9] border border-[#8FA85B]/40 shadow-sm flex items-center justify-center mb-3">
-        {category === 'yas-pasta' && (
-          <svg
-            viewBox="0 0 48 48"
-            className="w-9 h-9"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M10 34H38V24C38 21.7909 36.2091 20 34 20H14C11.7909 20 10 21.7909 10 24V34Z"
-              fill="#F3ECE1"
-              stroke="#3E2723"
-              strokeWidth="2.2"
-            />
-            <path
-              d="M10 27C13 27 14 29 17 29C20 29 21 27 24 27C27 27 28 29 31 29C34 29 35 27 38 27"
-              stroke="#C84B59"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-            />
-            <circle cx="24" cy="15" r="3.5" fill="#C84B59" />
-            <path d="M24 11.5C25.5 9.5 27.5 9 29 9.5" stroke="#8FA85B" strokeWidth="2" strokeLinecap="round" />
-            <path d="M7 34H41" stroke="#3E2723" strokeWidth="2.4" strokeLinecap="round" />
-          </svg>
-        )}
-
-        {category === 'ekler-ibiza' && (
-          <svg
-            viewBox="0 0 48 48"
-            className="w-9 h-9"
-            fill="none"
-            aria-hidden="true"
-          >
-            <rect
-              x="8"
-              y="19"
-              width="32"
-              height="13"
-              rx="6.5"
-              fill="#F3ECE1"
-              stroke="#3E2723"
-              strokeWidth="2.2"
-            />
-            <path
-              d="M11 23C11 20.5 14 19 18 19H30C34 19 37 20.5 37 23C35 24.5 32 23.5 29 24.5C26 25.5 22 23.5 19 24.5C16 25.5 13 24 11 23Z"
-              fill="#3E2723"
-            />
-            <path
-              d="M15 22L19 25M23 21.5L27 25M31 22L34 24.5"
-              stroke="#8FA85B"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-            />
-          </svg>
-        )}
-
-        {category === 'kuru-pasta' && (
-          <svg
-            viewBox="0 0 48 48"
-            className="w-9 h-9"
-            fill="none"
-            aria-hidden="true"
-          >
-            <circle
-              cx="24"
-              cy="24"
-              r="13"
-              fill="#F3ECE1"
-              stroke="#3E2723"
-              strokeWidth="2.2"
-            />
-            <circle cx="24" cy="24" r="5" fill="#C84B59" />
-            <circle cx="18" cy="18" r="1.4" fill="#3E2723" />
-            <circle cx="30" cy="19" r="1.4" fill="#3E2723" />
-            <circle cx="19" cy="30" r="1.4" fill="#3E2723" />
-            <circle cx="29" cy="29" r="1.4" fill="#8FA85B" />
-          </svg>
-        )}
-
-        {category === 'sutlu-tatlilar' && (
-          <svg
-            viewBox="0 0 48 48"
-            className="w-9 h-9"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M10 23H38L35 34C34.4 36.2 32.4 37.8 30.1 37.8H17.9C15.6 37.8 13.6 36.2 13 34L10 23Z"
-              fill="#F3ECE1"
-              stroke="#3E2723"
-              strokeWidth="2.2"
-            />
-            <path
-              d="M12 23C14 19.5 18.5 17.5 24 17.5C29.5 17.5 34 19.5 36 23"
-              stroke="#8FA85B"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-            />
-            <circle cx="24" cy="15" r="2.5" fill="#C84B59" />
-          </svg>
-        )}
+        <Icon
+          name={CATEGORY_ICON_NAME_MAP[category]}
+          size={32}
+          variant="duotone"
+          className="text-[#3B2314]"
+        />
       </div>
 
       <span className="relative z-10 text-xs font-medium tracking-wide text-[#5D4037]/80">

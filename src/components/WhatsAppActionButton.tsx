@@ -1,6 +1,6 @@
 import React from 'react';
-import { ArrowUpRight } from 'lucide-react';
 import { WhatsAppIcon } from './WhatsAppIcon';
+import { Icon } from './ui/IconRegistry';
 
 export interface WhatsAppActionButtonProps {
   href: string;
@@ -46,8 +46,8 @@ const SIZE_CLASSES: Record<'sm' | 'md' | 'lg', { button: string; icon: string }>
 };
 
 /**
- * Kurumsal kimlik estetiğine uygun, resmi WhatsApp ikonlu ve belirgin hover
- * derinliğine sahip ortak sipariş / iletişim eylem düğmesi.
+ * Kurumsal kimlik estetiğine uygun, resmi WhatsApp ikonlu ve hover'da kapağı
+ * aralanan pasta kutusu mikro-etkileşimine sahip ortak sipariş / iletişim düğmesi.
  */
 export const WhatsAppActionButton: React.FC<WhatsAppActionButtonProps> = ({
   href,
@@ -69,10 +69,10 @@ export const WhatsAppActionButton: React.FC<WhatsAppActionButtonProps> = ({
       aria-label={ariaLabel}
       onClick={onClick}
       className={[
-        'group relative overflow-hidden inline-flex items-center justify-center rounded-full',
+        'group icon-box-hover relative overflow-hidden inline-flex items-center justify-center rounded-full',
         'text-white font-semibold tracking-[0.01em] whitespace-nowrap text-center cursor-pointer',
         'transition-all duration-250 ease-[cubic-bezier(0.22,1,0.36,1)]',
-        'hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]',
+        'hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.96]',
         VARIANT_CLASSES[variant],
         sizeSpec.button,
         className,
@@ -89,15 +89,24 @@ export const WhatsAppActionButton: React.FC<WhatsAppActionButtonProps> = ({
       {children}
 
       <WhatsAppIcon
-        className={`${sizeSpec.icon} relative z-10 shrink-0 drop-shadow-[0_1px_2px_rgba(30,20,14,0.22)] transition-transform duration-250 ease-out group-hover:scale-110 group-hover:-rotate-6`}
+        className={`${sizeSpec.icon} relative z-10 shrink-0 transition-transform duration-200 ease-out group-hover:scale-110 group-hover:-rotate-6`}
       />
 
       <span className="relative z-10">{label}</span>
 
-      <ArrowUpRight
-        className="relative z-10 w-4 h-4 shrink-0 opacity-75 transition-all duration-250 ease-out group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-        aria-hidden="true"
-      />
+      <span className="relative z-10 inline-flex items-center gap-1 shrink-0 opacity-85 group-hover:opacity-100 transition-opacity">
+        <Icon
+          name="pasta-kutusu"
+          size={16}
+          variant="duotone"
+          style={{ ['--icon-accent' as string]: 'var(--icon-vanilya)' }}
+        />
+        <Icon
+          name="arrow-up-right"
+          size={16}
+          className="transition-transform duration-200 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        />
+      </span>
     </a>
   );
 };
